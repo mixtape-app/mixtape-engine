@@ -102,12 +102,12 @@ If FFmpeg is missing, Mixtape will display an appropriate warning message.
 
 ## Logging
 
-Mixtape logs all errors and successful conversions in `mixtape.log`.
+Mixtape logs all errors and successful conversions in `logs/mixtape.log`.
 
 View logs:
 
 ```sh
-cat mixtape.log
+cat logs/mixtape.log
 ```
 
 Example log entries:

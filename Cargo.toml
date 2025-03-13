@@ -20,3 +20,4 @@ rand = "0.9.0"
 assert_cmd = "2.0"
 tempfile = "3.3"
 regex = "1.11.1"  # Moved regex to dev-dependencies since it's only used in tests
+predicates = "3.0"

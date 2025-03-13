@@ -92,9 +92,10 @@ fn track_progress(mut child: Child, input: &str, output: &str) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::fs;
+    use std::fs::{ self, File };
     use std::process::{ Command, Stdio };
     use clap::Parser;
+    use std::path::Path;
 
     #[test]
     fn test_check_ffmpeg() {
@@ -141,9 +142,17 @@ mod tests {
 
     #[test]
     fn test_nonexistent_file_skipped() {
+        let log_path = "logs/mixtape.log";
+
+        // Ensure log file exists before reading
+        if !Path::new(log_path).exists() {
+            File::create(log_path).expect("Failed to create log file");
+        }
+
         let missing_file = "fake_file.mp4";
         log_error(&format!("Input file '{}' does not exist.", missing_file));
-        let log_contents = fs::read_to_string("mixtape.log").expect("Failed to read log file");
+
+        let log_contents = fs::read_to_string(log_path).expect("Failed to read log file");
         assert!(log_contents.contains(missing_file));
     }
 
