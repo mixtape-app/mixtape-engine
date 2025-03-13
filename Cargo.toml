@@ -1,0 +1,22 @@
+[package]
+name = "mixtape-engine"
+version = "0.1.0"
+edition = "2021"  # Rust 2024 is not officially available yet
+build = "build.rs"
+
+[[bin]]
+name = "mixtape"
+path = "src/main.rs"
+
+[dependencies]
+chrono = "0.4.40"
+clap = { version = "4.5.32", features = ["derive"] }
+indicatif = "0.17.11"
+num_cpus = "1.16.0"
+uuid = { version = "1.6", features = ["v4"] }
+
+[dev-dependencies]
+rand = "0.9.0"
+assert_cmd = "2.0"
+tempfile = "3.3"
+regex = "1.11.1"  # Moved regex to dev-dependencies since it's only used in tests

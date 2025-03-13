@@ -1,0 +1,43 @@
+name: Mixtape Engine CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest  # Change to macos-latest if Mac-specific features are needed
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install FFmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Set up Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Cargo dependencies
+        uses: Swatinem/rust-cache@v2
+
+      - name: Build the project
+        run: cargo build --verbose
+
+      - name: Run unit tests
+        run: cargo test --verbose
+
+      - name: Run integration tests
+        run: cargo test --test integration_tests -- --nocapture
+
+      - name: Upload logs if tests fail
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-logs
+          path: logs/
